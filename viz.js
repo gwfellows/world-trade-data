@@ -1,23 +1,14 @@
-/*var n = 100;
-var x = [], y = [], z = [];
-var dt = 0.015;
-
-for (i = 0; i < n; i++) {
-  x[i] = -73//Math.random() * 2 - 1;
-  y[i] = 45//Math.random() * 2 - 1;
-  z[i] = 45//30 + Math.random() * 10;
-}*/
-
 partners = {
-	'USA,china': {
-		start: [-73, 45],
-		end: [-83, 55]
-	}
+	'USA,china': [ 
+		[-103, 44],  //source
+		 [116, 39] //dest
+	]
 }
 
-var x = [-73] //lat
-var y = [45] //lon
-var z = ['USA,China'] //trading partners
+var x = [44] //lat
+var y = [103] //lon
+var z = ['USA,china'] //trading partners
+var k = [0] // 0-1, for cycles
 
 Plotly.plot('graph', [{
 type: 'scattergeo',
@@ -38,32 +29,19 @@ type: 'scattergeo',
         countrywidth: 1.5,
         subunitcolor: '#d3d3d3'
     }
-  //xaxis: {range: [-40, 40]},
-  //yaxis: {range: [0, 60]},
+
 }, {showSendToCloud:true})
 
 function compute () {
-/*
-  var s = 10, b = 8/3, r = 28;
-  var dx, dy, dz;
-  var xh, yh, zh;
-  for (var i = 0; i < n; i++) {
-    dx = s * (y[i] - x[i]);
-    dy = x[i] * (r - z[i]) - y[i];
-    dz = x[i] * y[i] - b * z[i];
 
-    xh = x[i] + dx * dt * 0.5;
-    yh = y[i] + dy * dt * 0.5;
-    zh = z[i] + dz * dt * 0.5;
-
-    dx = s * (yh - xh);
-    dy = xh * (r - zh) - yh;
-    dz = xh * yh - b * zh;
-
-    x[i] += dx * dt;
-    y[i] += dy * dt;
-    z[i] += dz * dt;
-  }*/
+  for (var i = 0; i < x.length; i++) {
+    k[i]+=0.1
+    if (k[i]>1){
+        k[i] = 0 
+    }
+    x[i] = partners[z[i]][1][0] * k[i] + partners[z[i]][0][0] * (1-k[i]) ;
+    y[i] = partners[z[i]][1][1] * k[i] + partners[z[i]][0][1] * (1-k[i]) ;
+  }
 }
 
 function update () {
