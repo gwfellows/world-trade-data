@@ -4,14 +4,14 @@ d = d[d["L3"] == "000"] #only for all items
 
 '''
 need to make table
-source_lat
-source_lon
-dest_lat
-dest_lon
-current_lat      starts at source lat
-current_lon     starts at source_lon
-k_factor          starts at 0
-step                proportional to trade volume
+a) source_lat
+b) source_lon
+c) dest_lat
+d) dest_lon
+e) current_lat      starts at source lat
+f) current_lon     starts at source_lon
+g) k_factor          starts at 0
+h) step                proportional to trade volume
 '''
 
 cd = pd.read_csv('./tradeconnectivity/other_economy.csv')
@@ -68,6 +68,15 @@ def country_code_to_coords(code):
     lon = ld[ld['1'] == n ]['4'].to_list()[0]
     return lat, lon
     
+a = []
+b = []
+c = []
+d_ = []
+e = []
+f = []
+g = []
+h = []
+
 for i, row in d.iterrows():
     source_country_code = row['Reporter']
     dest_country_code = row['Partner']
@@ -89,4 +98,25 @@ for i, row in d.iterrows():
     current_lat, current_lon = source_lat, source_lon
     k_factor = 0
     step = exports_from_source_to_dest/(300*10**9)
+    
+    a.append(source_lat)
+    b.append(source_lon)
+    c.append(dest_lat)
+    d_.append(dest_lon)
+    e.append(current_lat)
+    f.append(current_lon)
+    g.append(k_factor)
+    h.append(step)
     #print(step)
+import json
+with open("data_file.json", "w") as write_file:
+    json.dump({'a':a, 'b':b, 'c':c, 'd':d_, 'e':e, 'f':f, 'g':g, 'h':h}, write_file)
+'''
+print(a)
+print(b)
+print(c)
+print(d_)
+print(e)
+print(f)
+print(g)
+print(h)'''

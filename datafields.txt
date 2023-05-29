@@ -1,0 +1,8 @@
+a) source_lat
+b) source_lon
+c) dest_lat
+d) dest_lon
+e) current_lat      starts at source lat
+f) current_lon     starts at source_lon
+g) k_factor          starts at 0
+h) step                proportional to trade volume
