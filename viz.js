@@ -2,13 +2,18 @@ partners = {
 	'USA,china': [ 
 		[-103, 44],  //source
 		 [116, 39] //dest
+	],
+	'USA,china2': [ 
+		[-103, 44-10],  //source
+		 [116, 39-10] //dest
 	]
 }
 
-var x = [44] //lat
-var y = [103] //lon
-var z = ['USA,china'] //trading partners
-var k = [0] // 0-1, for cycles
+var x = [44, 44] //lat
+var y = [103, 103] //lon
+var z = ['USA,china', 'USA,china2'] //trading partners
+var k = [0, 0] // 0-1, for cycles
+var s = [0.1, 0.2] //step
 
 Plotly.plot('graph', [{
 type: 'scattergeo',
@@ -35,7 +40,7 @@ type: 'scattergeo',
 function compute () {
 
   for (var i = 0; i < x.length; i++) {
-    k[i]+=0.1
+    k[i]+=s[i]
     if (k[i]>1){
         k[i] = 0 
     }
