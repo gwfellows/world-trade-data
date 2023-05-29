@@ -1,7 +1,7 @@
 import pandas as pd
 d = pd.read_csv('./tradeconnectivity/data.csv')
 d = d[d["L3"] == "000"] #only for all items
-
+import random
 '''
 need to make table
 a) source_lat
@@ -96,7 +96,7 @@ for i, row in d.iterrows():
     source_lat, source_lon = country_code_to_coords(source_country_code)
     dest_lat, dest_lon = country_code_to_coords(dest_country_code)
     current_lat, current_lon = source_lat, source_lon
-    k_factor = 0
+    k_factor = random.uniform(0, 1)
     step = exports_from_source_to_dest/(300*10**9)
     
     if (exports_from_source_to_dest>10**9):

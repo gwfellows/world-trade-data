@@ -16,9 +16,19 @@ window.onresize = function(){ location.reload(); }
 const width  = document.getElementById('outer').offsetWidth
 const height = document.getElementById('outer').offsetHeight
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+var cs = []
 var hs = []
 for (item of h){
-    hs.push(Math.sqrt(item*200)+3);
+    hs.push(Math.sqrt(item*300)+3);
+    cs.push(getRandomColor())
 }
 
 Plotly.plot('graph', [{
@@ -30,7 +40,7 @@ type: 'scattergeo',
     geo: {
         projection: {
 
-        type: 'albers'
+        type: 'natural earth'
 
       },
         scope: 'world',
@@ -69,7 +79,8 @@ function update () {
     marker: {
         size: hs,
         opacity: 0.5,
-        line: 0
+        line: 0,
+        color: cs
     }
     
     }],
