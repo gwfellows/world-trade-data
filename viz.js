@@ -15,6 +15,18 @@ var z = ['USA,china', 'USA,china2'] //trading partners
 var k = [0, 0] // 0-1, for cycles
 var s = [0.1, 0.2] //step
 
+/*
+need to make table
+source_lat
+source_lon
+dest_lat
+dest_lon
+current_lat      starts at source lat
+current_lon     starts at source_lon
+k_factor          starts at 0
+step                proportional to trade volume
+*/
+
 Plotly.plot('graph', [{
 type: 'scattergeo',
   x: x,
