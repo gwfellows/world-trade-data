@@ -99,14 +99,15 @@ for i, row in d.iterrows():
     k_factor = 0
     step = exports_from_source_to_dest/(300*10**9)
     
-    a.append(source_lat)
-    b.append(source_lon)
-    c.append(dest_lat)
-    d_.append(dest_lon)
-    e.append(current_lat)
-    f.append(current_lon)
-    g.append(k_factor)
-    h.append(step)
+    if (exports_from_source_to_dest>10**9):
+        a.append(source_lat)
+        b.append(source_lon)
+        c.append(dest_lat)
+        d_.append(dest_lon)
+        e.append(current_lat)
+        f.append(current_lon)
+        g.append(k_factor)
+        h.append(step)
     #print(step)
 import json
 with open("data_file.json", "w") as write_file:

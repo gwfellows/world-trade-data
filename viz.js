@@ -1,12 +1,21 @@
+//import Math
 
-var a = [44, 44]
-var b = [-103, -104]
-var c = [54, 44]
-var d = [123, 123]
-var e = [44, 11]
-var f = [103, 104]
-var g = [0, 0]
-var h = [0.01, 0.02]
+
+var mdata = JSON.parse(data)
+var a = mdata['a']
+var b = mdata['b']
+var c = mdata['c']
+var d = mdata['d']
+var e = mdata['e']
+var f = mdata['f']
+var g = mdata['g']
+var h = mdata['h']
+
+
+var hs = []
+for (item of h){
+    hs.push(Math.sqrt(item*200)+3);
+}
 
 Plotly.plot('graph', [{
 type: 'scattergeo',
@@ -33,12 +42,12 @@ type: 'scattergeo',
 function compute () {
 
   for (var i = 0; i < a.length; i++) {
-    g[i] += h[i]
+    g[i] += 0.05//h[i]
     if (g[i]>1){
         g[i] = 0 
     }
-    e[i] = a[i] * g[i] + c[i] * (1-g[i]) ;
-    f[i] = b[i] * g[i] + d[i] * (1-g[i]) ;
+    e[i] = a[i] * (1-g[i]) + c[i] * g[i] ;
+    f[i] = b[i] * (1-g[i]) + d[i] * g[i] ;
     //console.log(e[i])
    //console.log(f[i])
   }
@@ -48,10 +57,23 @@ function update () {
   compute();
   
   Plotly.animate('graph', {
-    data: [{lon: f, lat: e}]
+    data: [{lon: f, lat: e,
+    
+    marker: {
+        size: hs,
+        opacity: 0.5,
+        line: 0
+    }
+    
+    }],
+    layout: {
+        margin: {t:50, b:0, l:0, r:0},
+        autosize: true,
+    }
   }, {
     transition: {
       duration: 0,
+      easing: 'cubic-in-out'
     },
     frame: {
       duration: 0,
