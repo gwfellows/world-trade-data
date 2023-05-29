@@ -11,6 +11,10 @@ var f = mdata['f']
 var g = mdata['g']
 var h = mdata['h']
 
+window.onresize = function(){ location.reload(); }
+
+const width  = document.getElementById('outer').offsetWidth
+const height = document.getElementById('outer').offsetHeight
 
 var hs = []
 for (item of h){
@@ -24,14 +28,17 @@ type: 'scattergeo',
   mode: 'markers',
 }], {
     geo: {
+        projection: {
+
+        type: 'albers'
+
+      },
         scope: 'world',
-        resolution: 50,
-        showrivers: true,
-        rivercolor: '#fff',
-        showlakes: true,
-        lakecolor: '#fff',
-        showland: true,
-        landcolor: '#EAEAAE',
+        resolution: 5,
+        showrivers: false,
+        showcountries: true,
+        showlakes: false,
+        showland: false,
         countrycolor: '#d3d3d3',
         countrywidth: 1.5,
         subunitcolor: '#d3d3d3'
@@ -42,7 +49,7 @@ type: 'scattergeo',
 function compute () {
 
   for (var i = 0; i < a.length; i++) {
-    g[i] += 0.05//h[i]
+    g[i] += 0.01//h[i]
     if (g[i]>1){
         g[i] = 0 
     }
@@ -67,8 +74,9 @@ function update () {
     
     }],
     layout: {
-        margin: {t:50, b:0, l:0, r:0},
-        autosize: true,
+        margin: {t:0, b:0, l:0, r:0},
+        width: width-50,
+        height: height-50,
     }
   }, {
     transition: {
