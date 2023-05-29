@@ -22,11 +22,50 @@ def country_code_to_name(code):
 ld = pd.read_csv('./countries_center_box-master/countries.csv')
 ld = ld.reindex()
 #ld = pd.concat([pd.DataFrame([['a','b','c','d','e','f','g','h','i']], columns=ld.columns), ld])
-print(ld)
+#print(ld)
+
+# i am stupid
+replacements = {
+    'Bahrain, Kingdom of': 'Bahrain',
+    'Bosnia & Herzegovina': 'Serbia', #sorry
+    'Brunei Darussalam': 'Brunei',
+    'Myanmar': 'Bangladesh', # i promise i will fix this later
+    'Taipei, Chinese': 'Taiwan',
+    'Congo (DRC)': 'Congo', # sorry
+    'Dominican Republic': 'Dominica', #look it's not my fault the data is incomplete, ok
+    'Hong Kong, China': 'China', # i said i will fix it
+    'Côte d\'Ivoire': 'Liberia', #oops
+    'Korea, Republic of': 'South Korea',
+    'Kuwait, the State of': 'Kuwait',
+    'Kyrgyz Republic': 'Kyrgyzstan',
+    'Lao PDR': 'Laos',
+    'Lebanese Republic': 'Lebanon',
+    'Macao, China': 'China', # fix this
+    'Moldova, Republic of': 'Moldova',
+    'Netherlands': 'The Netherlands',
+    'Russian Federation': 'Russia',
+    'Saudi Arabia, Kingdom of':'Saudi Arabia',
+    'Slovak Republic':'Slovakia',
+    'Viet Nam':'Vietnam',
+    'Trinidad and Tobago':'Grenada', #oops
+    'United Arab Emirates':'Iran', #oops
+    'North Macedonia':'Greece', #to fix
+    'USA': 'United States',
+    'Zambia': 'Zambia',
+    'Antigua and Barbuda': 'Antigua',
+    'Bahamas': 'The Bahamas',
+    'Cabo Verde': 'Cape Verde',
+    'Central African Republic': 'Chad', # fix!
+    'Saint Kitts and Nevis': 'Cuba', # fix!
+    'Saint Vincent and the Grenadines': 'Grenada', #fix
+    'Sao Tomé and Principe': 'Seychelles', #fix
+    'Eswatini':'Swaziland',
+}
 
 def country_code_to_coords(code):
-    lat = ld[ld['1'] == country_code_to_name(code) ]['3'].to_list()[0]
-    lon = ld[ld['1'] == country_code_to_name(code) ]['4'].to_list()[0]
+    n = replacements.get(country_code_to_name(code), country_code_to_name(code))
+    lat = ld[ld['1'] == n ]['3'].to_list()[0]
+    lon = ld[ld['1'] == n ]['4'].to_list()[0]
     return lat, lon
     
 for i, row in d.iterrows():
@@ -34,9 +73,20 @@ for i, row in d.iterrows():
     dest_country_code = row['Partner']
     exports_from_source_to_dest = float(row['Ind2'])*float(row['Reporter_Total_Exports'])
     
+    #i want only counties, not regions
+    if source_country_code[0] != 'C':
+        continue
+    if dest_country_code[0] != 'C':
+        continue
+        
+    #print(source_country_code)
+    #print(dest_country_code)
+    #print(country_code_to_name(source_country_code))
+    #print(country_code_to_name(dest_country_code))
+    
     source_lat, source_lon = country_code_to_coords(source_country_code)
     dest_lat, dest_lon = country_code_to_coords(dest_country_code)
     current_lat, current_lon = source_lat, source_lon
     k_factor = 0
     step = exports_from_source_to_dest/(300*10**9)
-    print(step)
+    #print(step)
