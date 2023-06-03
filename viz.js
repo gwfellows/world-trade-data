@@ -44,7 +44,7 @@ type: 'scattergeo',
 
       },
         scope: 'world',
-        resolution: 5,
+        resolution: 1,
         showrivers: false,
         showcountries: true,
         showlakes: false,
