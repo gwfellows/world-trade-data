@@ -59,12 +59,19 @@ type: 'scattergeo',
 function compute () {
 
   for (var i = 0; i < a.length; i++) {
-    g[i] += 0.01//h[i]
+    g[i] += 0.01//0.01//h[i]
     if (g[i]>1){
         g[i] = 0 
     }
-    e[i] = a[i] * (1-g[i]) + c[i] * g[i] ;
-    f[i] = b[i] * (1-g[i]) + d[i] * g[i] ;
+    e[i] = a[i] * (1-g[i]) + c[i] * g[i] ; //lat    
+        
+    if ( ((b[i]>60)&&(d[i]<-30)) ){
+        f[i] = ( (b[i] * (1-g[i]) + (b[i] + (180-b[i]) + (d[i]+180)) * g[i] ) - 180 ) % 360 - 180
+    } else if ( ((d[i]>60)&&(b[i]<-30)) ){
+         f[i] = ( (b[i] * (1-g[i]) + (b[i] - (180+b[i]) - (180-d[i])) * g[i] ) - 180 ) % 360 - 180
+    } else {
+         f[i] = b[i] * (1-g[i]) + d[i] * g[i] ; // lon (x axis)
+    }
     //console.log(e[i])
    //console.log(f[i])
   }
